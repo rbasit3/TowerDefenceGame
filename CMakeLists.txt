@@ -24,6 +24,6 @@ target_link_libraries(TowerDefense
         SFML::System
 )
 
-# this copies your assets folder into the build directory so your game can find the images
+#  this copies your assets folder into the build directory so your game can find the images
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets 
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
