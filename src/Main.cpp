@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Menu.hpp"
 #include <iostream>
-
+#include "Game.hpp"
 int main()
 {
     //sets the window size (preferably 1280 x 720 for now)
@@ -11,12 +11,14 @@ int main()
     );
 
     Menu menu; // constructor loads textures
-    
+    Game game;
+    sf::Clock clock; //SFML clock to measure time between frames
     
     GameState currentState = GameState::MENU; // MENU state
 
     while (window.isOpen()) //main game loop
     {
+        float deltaTime = clock.restart().asSeconds(); //calculates time b/w frames in game loop
         while (const auto event = window.pollEvent()) //pollevent() checks if ltr ANYTHING happens i.e click,press
         {
             if (event->is<sf::Event::Closed>()) // as you click the Cross (X) button, it exits. 
@@ -53,8 +55,10 @@ int main()
                 break;
 
             case GameState::PLAY:
-                // testing 
-                window.clear(sf::Color::Blue);
+                //takes you to the basic hardcoded path and enemy for now.
+                window.clear(sf::Color(70, 150, 70));
+                game.update(deltaTime);
+                game.render(window);
                 break;
 
             case GameState::ACHIEVEMENTS:
