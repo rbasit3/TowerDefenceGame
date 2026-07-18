@@ -11,9 +11,8 @@ find_package(SFML 3 REQUIRED COMPONENTS Graphics Window System)
 add_executable(TowerDefense
     src/Main.cpp
     src/Menu.cpp
-    src/Main.cpp
-    src/Menu.cpp
-    src/Game.cpp 
+    src/Game.cpp
+    src/Entity.cpp
 )
 
 # tells CMake to look in the 'src' folder for your .h files
