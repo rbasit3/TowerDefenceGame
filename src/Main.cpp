@@ -12,13 +12,13 @@ int main()
 
     Menu menu; // constructor loads textures
     Game game;
-    sf::Clock clock;
+    sf::Clock clock; //SFML clock to measure time between frames
     
     GameState currentState = GameState::MENU; // MENU state
 
     while (window.isOpen()) //main game loop
     {
-        float deltaTime = clock.restart().asSeconds();
+        float deltaTime = clock.restart().asSeconds(); //calculates time b/w frames in game loop
         while (const auto event = window.pollEvent()) //pollevent() checks if ltr ANYTHING happens i.e click,press
         {
             if (event->is<sf::Event::Closed>()) // as you click the Cross (X) button, it exits. 
@@ -55,7 +55,7 @@ int main()
                 break;
 
             case GameState::PLAY:
-                // testing 
+                //takes you to the basic hardcoded path and enemy for now.
                 window.clear(sf::Color(70, 150, 70));
                 game.update(deltaTime);
                 game.render(window);
