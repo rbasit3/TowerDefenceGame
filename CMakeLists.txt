@@ -13,7 +13,7 @@ add_executable(TowerDefense
     src/Menu.cpp
     src/Main.cpp
     src/Menu.cpp
-    src/Game.cpp
+    src/Game.cpp 
 )
 
 # tells CMake to look in the 'src' folder for your .h files
