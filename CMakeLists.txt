@@ -9,7 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(SFML 3 REQUIRED COMPONENTS Graphics Window System)
 
 add_executable(TowerDefense
+   
     src/Main.cpp
+    src/Button.cpp
     src/Menu.cpp
     src/Game.cpp
     src/Entity.cpp
