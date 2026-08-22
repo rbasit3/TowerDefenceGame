@@ -3,114 +3,87 @@
 
 using namespace std;
 
-
-Menu::Menu()    
-    : bgTexture("assets/menu_background.png"),
-      bgSprite(bgTexture),
-
-      playTexture("assets/ui/play_menu.png"),
-      playSprite(playTexture),
-
-      achievementsTexture("assets/ui/achievements_menu.png"),
-      achievementsSprite(achievementsTexture),
-
-      instructionsTexture("assets/ui/instructions_menu.png"),
-      instructionsSprite(instructionsTexture),
-
-      upgradesTexture("assets/ui/upgrades_menu.png"),
-      upgradesSprite(upgradesTexture),
-
-      settingsTexture("assets/ui/settings_menu.png"),
-      settingsSprite(settingsTexture)
+Menu::Menu() :bgTexture("assets/menu_background.png"),  bgSprite(bgTexture)   
 {
-    
-    // playSprite.setScale({1.2f, 1.2f});
-    // achievementsSprite.setScale({0.6f, 0.7f});
-    // instructionsSprite.setScale({0.6f, 0.7f});
-    // upgradesSprite.setScale({0.6f, 0.6f});
-    // settingsSprite.setScale({0.7f, 0.7f});
-
-    //sets the sprites position
+    // Load background image[cite: 4]
     bgSprite.setPosition({0.f, 0.f});
-    playSprite.setPosition({538.f, 443.f});
-    achievementsSprite.setPosition({516.f, 569.f});
-    instructionsSprite.setPosition({519.f, 502.f});
-    upgradesSprite.setPosition({516.f, 640.f});
-    settingsSprite.setPosition({1138.f, 613.f});
-    
+
+    // Initialize buttons using new and your original coordinates/scales[cite: 4]
+    playButton = new Button("assets/ui/play_menu.png", {538.f, 443.f}, {1.33f, 1.25f}, {1.34f, 1.27f});
+    achievementsButton = new Button("assets/ui/achievements_menu.png", {516.f, 569.f}, {0.6f, 0.7f}, {0.61f, 0.73f});
+    instructionsButton = new Button("assets/ui/instructions_menu.png", {519.f, 502.f}, {0.6f, 0.71f}, {0.61f, 0.74f});
+    upgradesButton = new Button("assets/ui/upgrades_menu.png", {516.f, 640.f}, {0.68f, 0.68f}, {0.689f, 0.71f});
+    settingsButton = new Button("assets/ui/settings_menu.png", {1138.f, 613.f}, {0.68f, 0.68f}, {0.69f, 0.69f});
+}
+
+Menu::~Menu() 
+{
+    // Delete raw pointers to free memory when the menu is destroyed
+    delete playButton;
+    delete achievementsButton;
+    delete instructionsButton;
+    delete upgradesButton;
+    delete settingsButton;
 }
 
 void Menu::update(const sf::RenderWindow& window)
 {
-   
-    sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window)); //gets current mouse position
-    handleHover(playSprite, {1.33f, 1.25f}, {1.34f, 1.27f}, mousePos);
-    handleHover(achievementsSprite, {0.6f, 0.7f}, {0.61f, 0.73f}, mousePos);
-    handleHover(instructionsSprite, {0.6f, 0.71f}, {0.61f, 0.74f}, mousePos);
-    handleHover(upgradesSprite, {0.68f, 0.68f}, {0.689f, 0.71f}, mousePos);
-    handleHover(settingsSprite, {0.68f, 0.68f}, {0.69f, 0.69f}, mousePos);
+    // Get current mouse position[cite: 4]
+    sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window)); 
+    
+    // Update all buttons with simple function calls
+    playButton->update(mousePos);
+    achievementsButton->update(mousePos);
+    instructionsButton->update(mousePos);
+    upgradesButton->update(mousePos);
+    settingsButton->update(mousePos);
 }
 
-void Menu::handleHover(sf::Sprite& sprite, sf::Vector2f originalScale, sf::Vector2f hoverScale, sf::Vector2f mousePos)
-{
-    // Check if the mouse is touching the button
-    if (sprite.getGlobalBounds().contains(mousePos)) //getglobalbounds sets the rectangle around the sprite and contains check if the mouse is inside it
-    {
-        sprite.setScale(hoverScale); //makes button larger
-        sprite.setColor(sf::Color(255, 235, 150)); // sets color for hover
-    }
-    else
-    {
-        sprite.setScale(originalScale);
-        sprite.setColor(sf::Color::White); 
-    }
-}
-
-
-void Menu::render(sf::RenderWindow& window) // draws everything. requires window.display()
+void Menu::render(sf::RenderWindow& window) 
 {
     window.draw(bgSprite);
 
-    window.draw(playSprite);
-    window.draw(achievementsSprite);
-    window.draw(instructionsSprite);
-    window.draw(upgradesSprite);
-
-    window.draw(settingsSprite);
+    // Draw all buttons to the screen[cite: 4]
+    playButton->render(window);
+    achievementsButton->render(window);
+    instructionsButton->render(window);
+    upgradesButton->render(window);
+    settingsButton->render(window);
 }
 
-GameState Menu::handleClick(sf::Vector2f mousePos) //checks button clicking and returns the current state
+GameState Menu::handleClick(sf::Vector2f mousePos) 
 {
-    if (playSprite.getGlobalBounds().contains(mousePos))
+    // Check which button was clicked and return the corresponding state[cite: 4]
+    if (playButton->isClicked(mousePos))
     {
         cout << "Play button clicked!" << endl;
         return GameState::PLAY;
     }
     
-    if (achievementsSprite.getGlobalBounds().contains(mousePos))
+    if (achievementsButton->isClicked(mousePos))
     {
         cout << "Achievements button clicked!" << endl;
         return GameState::ACHIEVEMENTS;
     }
     
-    if (instructionsSprite.getGlobalBounds().contains(mousePos))
+    if (instructionsButton->isClicked(mousePos))
     {
         cout << "Instructions button clicked!" << endl;
         return GameState::INSTRUCTIONS;
     }
     
-    if (upgradesSprite.getGlobalBounds().contains(mousePos))
+    if (upgradesButton->isClicked(mousePos))
     {
         cout << "Upgrades button clicked!" << endl;
         return GameState::UPGRADES;
     }
     
-    if (settingsSprite.getGlobalBounds().contains(mousePos))
+    if (settingsButton->isClicked(mousePos))
     {
         cout << "Settings button clicked!" << endl;
         return GameState::SETTINGS;
     }
 
-    // if nothing was clicked it stays on the menu
+    // Stay on menu if nothing was clicked[cite: 4]
     return GameState::MENU; 
 }
