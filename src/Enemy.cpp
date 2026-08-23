@@ -3,12 +3,20 @@
 Enemy::Enemy(float x, float y,float maxHealth,float speed,int damage,int reward): Entity(x, y), maxHealth(maxHealth), health(maxHealth), speed(speed), damage(damage), reward(reward) {}
     //not sure if i wanna override this rn or in inherited classes. daikhtai hain.
 void Enemy::takeDamage(float amount)
+{
+    if (amount <= 0.f || !getActive())
     {
-        health -= amount;
-        if (health < 0) {
-            health = 0;
-        }
+        return;
     }
+
+    health -= amount;
+
+    if (health <= 0.f)
+    {
+        health = 0.f;
+        setActive(false);
+    }
+}
     bool Enemy:: isDead() const
     {
         if (health <= 0) {
@@ -56,3 +64,4 @@ void Enemy::takeDamage(float amount)
     void Enemy:: setReward(int reward){
         this->reward = reward;
     }
+    Enemy::~Enemy() = default;

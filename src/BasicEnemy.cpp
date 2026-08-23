@@ -10,8 +10,7 @@ BasicEnemy::BasicEnemy(float x, float y)
 
 void BasicEnemy::attack()
 {
-    // The Game class will subtract getDamage() from the player's lives.
-    // The enemy becomes inactive after attacking the base.
+    // Game subtracts getDamage() from the player's lives.
     setActive(false);
 }
 
@@ -22,24 +21,16 @@ void BasicEnemy::Move(float deltaTime)
         return;
     }
 
-    position.x += speed * deltaTime;
+    position.x += getSpeed() * deltaTime;
     shape.setPosition(position);
-}
-
-void BasicEnemy::takeDamage(float amount)
-{
-    Enemy::takeDamage(amount);
-
-    if (isDead())
-    {
-        setActive(false);
-    }
 }
 
 void BasicEnemy::render(sf::RenderWindow& window)
 {
-    if (getActive())
+    if (!getActive())
     {
-        window.draw(shape);
+        return;
     }
+
+    window.draw(shape);
 }
