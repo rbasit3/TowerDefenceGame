@@ -34,3 +34,7 @@ void BasicEnemy::render(sf::RenderWindow& window)
 
     window.draw(shape);
 }
+void BasicEnemy::takeDamage(float amount)
+{
+    Enemy::takeDamage(amount);
+}

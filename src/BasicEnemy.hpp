@@ -14,7 +14,7 @@ private:
 
 public:
     BasicEnemy(float x, float y);
-
+    void takeDamage(float amount) override;
     void attack() override;
     void Move(float deltaTime) override;
     void render(sf::RenderWindow& window) override;

@@ -16,6 +16,7 @@ void Enemy::takeDamage(float amount)
         health = 0.f;
         setActive(false);
     }
+}
     bool Enemy:: isDead() const
     {
         if (health <= 0) {
