@@ -23,7 +23,7 @@ public:
     virtual void Move(float deltaTime) override = 0;
     virtual void render(sf::RenderWindow& window) override = 0;
     virtual void attack() override = 0;
-    virtual void takeDamage(float amount) override = 0;
+    virtual void takeDamage(float amount) override;
 
     bool isDead() const;
 
