@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Menu.hpp"
 #include <iostream>
-#include "Game.hpp"
+#include "GameMechanics.hpp"
 int main()
 {
     //sets the window size (preferably 1280 x 720 for now)
@@ -11,7 +11,7 @@ int main()
     );
 
     Menu menu; // constructor loads textures
-    Game game;
+    GameMechanics gameMechanics;
     sf::Clock clock; //SFML clock to measure time between frames
     
     GameState currentState = GameState::MENU; // MENU state
@@ -40,6 +40,11 @@ int main()
                     {
                         currentState = menu.handleClick(mousePos); //passes the click location to your menuu
                     }
+                    else if (currentState == GameState::PLAY)
+                    {
+                        // Pass left clicks to GameMechanics to place towers
+                        gameMechanics.handleMouseClick(mousePos);
+                    }
                 }
             }
         }
@@ -55,11 +60,15 @@ int main()
                 break;
 
             case GameState::PLAY:
-                //takes you to the basic hardcoded path and enemy for now.
-                window.clear(sf::Color(70, 150, 70));
-                game.update(deltaTime);
-                game.render(window);
+            {
+                // Get mouse position for the grid hover
+                sf::Vector2f currentMousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+                
+                window.clear(sf::Color::Black);
+                gameMechanics.update(deltaTime, currentMousePos); 
+                gameMechanics.render(window);
                 break;
+            }
 
             case GameState::ACHIEVEMENTS:
                 window.clear(sf::Color::Green);// testing 
